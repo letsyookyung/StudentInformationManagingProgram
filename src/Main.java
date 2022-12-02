@@ -6,6 +6,24 @@ import java.util.Scanner;
 
 public class Main {
 
+    static List<String> validationList = null;
+    static boolean exitFlag = false;
+    static String  operation=null, name=null, phoneNumber = null, address = null, email = null, finalGrade = null;
+    static String field, value = null;
+
+
+    public static String getValidationList(String field) {
+
+        validationList = putPrintFormat.isValidData(2, field);
+        if (!Boolean.parseBoolean(validationList.get(0))) {
+            return value = null;
+        } else {
+            value = validationList.get(1);
+            return value;
+        }
+    }
+
+
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
@@ -14,17 +32,10 @@ public class Main {
         RemoveOperation remove = new RemoveOperation();
         SearchOperation search = new SearchOperation();
         PrintOperation print = new PrintOperation();
-//        PrintTextFormat format = new PrintTextFormat(); //질문
-
-        boolean exitFlag = false;
-        String operation, name, phoneNumber, address, email;
-        String field, value = null;
-
 
         while (!exitFlag) {
 
             System.out.println(PrintTextFormat.menuForm);
-
             operation = sc.nextLine();
 
             switch (operation) {
@@ -32,29 +43,38 @@ public class Main {
                     exitFlag = true;
                     break;
                 case "1":
-                    System.out.println(putPrintFormat.name);
-                    name = sc.nextLine();
+                    // name
+                    name = getValidationList("name");
+                    if (name == null) {break;}
 
                     boolean isEmpty = put.checkDuplicate(name);
-                    if (isEmpty) {
-                        System.out.println(putPrintFormat.phoneNumber);
-                        phoneNumber = sc.nextLine();
-                        System.out.println(putPrintFormat.address);
-                        address = sc.nextLine();
-                        System.out.println(putPrintFormat.email);
-                        email = sc.nextLine();
-
-                        List<String> infoList = new ArrayList<>(Arrays.asList(phoneNumber, address, email));
-
-                        put.put(name, infoList);
-                    } else {
+                    if (!isEmpty) {
                         System.out.println(putPrintFormat.alreadyExist);
-                    }
+                        break;}
+
+                    // phone number
+                    phoneNumber = getValidationList("phoneNumber");
+                    if (phoneNumber == null) {break;}
+
+                    // address
+                    address = getValidationList("address");
+                    if (address == null) {break;}
+
+                    //email
+                    email = getValidationList("email");
+                    if (email == null) {break;}
+
+                    //grade
+                    finalGrade = getValidationList("finalGrade");
+                    if (finalGrade == null) {break;}
+
+                    List<String> infoList = new ArrayList<>(Arrays.asList(phoneNumber, address, email, finalGrade));
+                    put.put(name, infoList);
                     break;
                 case "2":
                     System.out.println(modifyPrintFormat.askName);
-                    System.out.println(modifyPrintFormat.name);
-                    name = sc.nextLine();
+                    name = getValidationList("name");
+                    if (name == null) {break;}
                     System.out.println(modifyPrintFormat.askField);
                     field = sc.nextLine();
                     System.out.println(modifyPrintFormat.askHow);
@@ -64,7 +84,8 @@ public class Main {
                     break;
                 case "3":
                     System.out.println(removePrintFormat.askName);
-                    name = sc.nextLine();
+                    name = getValidationList("name");
+                    if (name == null) {break;}
                     remove.remove(name);
                     break;
                 case "4":
@@ -73,21 +94,20 @@ public class Main {
 
                     switch (field) {
                         case ("1"):
-                            System.out.println(searchPrintFormat.name);
-                            value = sc.nextLine();
-                            break;
+                            value = getValidationList("name");
+                            if (value == null) {break;}
                         case ("2"):
-                            System.out.println(searchPrintFormat.phoneNumber);
-                            value = sc.nextLine();
-                            break;
+                            value = getValidationList("phoneNumber");
+                            if (value == null) {break;}
                         case ("3"):
-                            System.out.println(searchPrintFormat.address);
-                            value = sc.nextLine();
-                            break;
+                            value = getValidationList("address");
+                            if (value == null) {break;}
                         case ("4"):
-                            System.out.println(searchPrintFormat.email);
-                            value = sc.nextLine();
-                            break;
+                            value = getValidationList("email");
+                            if (value == null) {break;}
+                        case ("5"):
+                            value = getValidationList("finalGrade");
+                            if (value == null) {break;}
                     }
                     search.search(field, value);
                     break;
@@ -98,17 +118,14 @@ public class Main {
                     operation = sc.nextLine();
 
                     if (operation.toLowerCase().contains("q")) {
-                        break;
+                        exitFlag = true ;
                     } else {
                         print.printOption(operation);
                     }
-                    break;
-                default :
-                    System.out.println(PrintTextFormat.retry);
             }
 
 
-            }
+        }
 
     }
 
