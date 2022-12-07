@@ -3,7 +3,7 @@ import java.util.List;
 
 public class ModifyOperation {
 
-    public void modify(String name, String field, String value){
+    public static void modify(String name, String field, String value){
         String priorValue = null;
         int index =0;
 

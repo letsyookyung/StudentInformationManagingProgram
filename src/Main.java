@@ -27,15 +27,10 @@ public class Main {
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
-        PutOperation put = new PutOperation();
-        ModifyOperation modify = new ModifyOperation();
-        RemoveOperation remove = new RemoveOperation();
-        SearchOperation search = new SearchOperation();
-        PrintOperation print = new PrintOperation();
 
         while (!exitFlag) {
 
-            System.out.println(PrintTextFormat.menuForm);
+            System.out.println(CommonUse.menuForm);
             operation = sc.nextLine();
 
             switch (operation) {
@@ -47,8 +42,7 @@ public class Main {
                     name = getValidationList("name");
                     if (name == null) {break;}
 
-                    boolean isEmpty = put.checkDuplicate(name);
-                    if (!isEmpty) {
+                    if (PutOperation.checkDuplicate(name)) {
                         System.out.println(putPrintFormat.alreadyExist);
                         break;}
 
@@ -69,58 +63,84 @@ public class Main {
                     if (finalGrade == null) {break;}
 
                     List<String> infoList = new ArrayList<>(Arrays.asList(phoneNumber, address, email, finalGrade));
-                    put.put(name, infoList);
+                    PutOperation.put(name, infoList);
                     break;
                 case "2":
                     System.out.println(modifyPrintFormat.askName);
                     name = getValidationList("name");
                     if (name == null) {break;}
+
+                    if (!PutOperation.checkDuplicate(name)) {
+                        System.out.println(putPrintFormat.retryName);
+                        break;}
+
                     System.out.println(modifyPrintFormat.askField);
                     field = sc.nextLine();
+
+                    if (!modifyPrintFormat.keyWordCheckList.contains(field)) {
+                        System.out.println(modifyPrintFormat.retry);
+                        break;
+                    }
+
                     System.out.println(modifyPrintFormat.askHow);
                     value = sc.nextLine();
 
-                    modify.modify(name, field, value);
+                    ModifyOperation.modify(name, field, value);
                     break;
                 case "3":
                     System.out.println(removePrintFormat.askName);
                     name = getValidationList("name");
                     if (name == null) {break;}
-                    remove.remove(name);
+
+                    if (!PutOperation.checkDuplicate(name)) {
+                        System.out.println(putPrintFormat.retryName);
+                        break;}
+
+                    RemoveOperation.remove(name);
                     break;
                 case "4":
                     System.out.println(searchPrintFormat.askField);
                     field = sc.nextLine();
 
                     switch (field) {
-                        case ("1"):
+                        case ("이름"):
                             value = getValidationList("name");
                             if (value == null) {break;}
-                        case ("2"):
+
+                            if (!PutOperation.checkDuplicate(name)) {
+                                System.out.println(putPrintFormat.retryName);
+                                break;}
+
+                            break;
+                        case ("전화번호"):
                             value = getValidationList("phoneNumber");
                             if (value == null) {break;}
-                        case ("3"):
+                            break;
+                        case ("집주소"):
                             value = getValidationList("address");
                             if (value == null) {break;}
-                        case ("4"):
+                            break;
+                        case ("이메일"):
                             value = getValidationList("email");
                             if (value == null) {break;}
-                        case ("5"):
-                            value = getValidationList("finalGrade");
+                            break;
+                        case ("성적"):
+                            value = getValidationList("finalGrade6️⃣");
                             if (value == null) {break;}
+                            break;
                     }
-                    search.search(field, value);
+                    SearchOperation.search(field, value);
                     break;
                 case "5":
-                    print.printAll();
+                    PrintOperation.printAll();
 
                     System.out.println(printPrintFormat.askField);
                     operation = sc.nextLine();
 
                     if (operation.toLowerCase().contains("q")) {
-                        exitFlag = true ;
+                        break;
                     } else {
-                        print.printOption(operation);
+                        PrintOperation.printOption(operation);
                     }
             }
 

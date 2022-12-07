@@ -4,19 +4,25 @@ import static java.lang.String.valueOf;
 
 public class PrintOperation {
 
-    public void printAll() {
+    public static void printAll() {
         System.out.println(printPrintFormat.field);
         iterateMap(InfoDataBase.allStudentInfo);
     }
 
 
-    public void printOption(String option) {
+    public static void printOption(String option) {
 
-        String option1, option2 ;
+        String option1, option2;
 
         try {
+
             option1 = option.split("-")[0];
             option2 = option.split("-")[1];
+
+            if (!CommonUse.keyWordCheckList.contains(option1) || !CommonUse.keyWordCheckList.contains(option2)) {
+                System.out.println(printPrintFormat.retry);
+                return;
+            }
 
             System.out.println(printPrintFormat.field);
             switch (option1) {
@@ -31,10 +37,9 @@ public class PrintOperation {
                     }
                     break;
                 case "성적":
-
                     HashMap<String, List<String>> sortedMap = new LinkedHashMap<>();
-
                     List<String> list = new ArrayList<>();
+
                     for (Map.Entry<String, List<String>> entry : InfoDataBase.allStudentInfo.entrySet()) {
                         list.add(entry.getValue().get(1));
                     }
@@ -55,10 +60,8 @@ public class PrintOperation {
                             }
                         }
                     }
-
                     iterateMap(sortedMap);
             }
-
         } catch (Exception e) {
             System.out.println(printPrintFormat.retry);
         }
@@ -74,7 +77,6 @@ public class PrintOperation {
             String result2 = String.format("%-5s%-8s%-17s%-20s%-17s%-8s\n", valueOf(i), valueOf(key), valueOf(valueList.get(0)),
                     valueOf(valueList.get(1)), valueOf(valueList.get(2)), valueOf(valueList.get(3)));
             System.out.printf(result2);
-
 
             i += 1;
         }

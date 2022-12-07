@@ -3,14 +3,11 @@ import java.util.List;
 
 public class PutOperation {
 
-    public boolean checkDuplicate(String name) {
-        if (InfoDataBase.allStudentInfo.containsKey(name)) {
-            return false;
-        }
-        return true;
+    public static boolean checkDuplicate(String name) {
+        return InfoDataBase.allStudentInfo.containsKey(name);
     }
 
-    public void put(String name, List<String> infoList) {
+    public static void put(String name, List<String> infoList) {
         InfoDataBase.allStudentInfo.put(name, infoList);
         System.out.println(putPrintFormat.success);
         System.out.printf("%s : %s", name, InfoDataBase.allStudentInfo.get(name));

@@ -1,9 +1,6 @@
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 
-public class PrintTextFormat {
+public class CommonUse {
 
     public static String menuForm = "\n\n------------------\n" +
                                         " 메뉴의 번호 입력하세요.\n" +
@@ -30,8 +27,13 @@ public class PrintTextFormat {
 
     public static String retry = "\uD83D\uDE4F 형식에 맞춰 입력해주세요 \uD83D\uDE4F \n";
 
+    public static String retryName = "\uD83D\uDE4F 해당하는 정보가 없습니다 \uD83D\uDE4F \n";
+
     static String nothing = "--------------------------------------------------------------------------------------";
     public static String field = String.format("%s\n%-5s%-8s%-15s%-20s%-20s%-8s\n%s", nothing, "번호", "이름", "전화번호", "집주소", "이메일", "성적", nothing);
+
+
+    public static List<String> keyWordCheckList = new ArrayList<>(Arrays.asList("이름", "전화번호", "집주소", "이메일","성적", "a", "b"));
 
     public static List<String> isValidData(int iteration, String field) {
 
@@ -75,7 +77,7 @@ public class PrintTextFormat {
 }
 
 
-class putPrintFormat extends PrintTextFormat {
+class putPrintFormat extends CommonUse {
 
     public static String alreadyExist = "➤➤➤ 이미 등록되어 있는 이름입니다.\n";
 
@@ -84,7 +86,7 @@ class putPrintFormat extends PrintTextFormat {
 }
 
 
-class modifyPrintFormat extends PrintTextFormat {
+class modifyPrintFormat extends CommonUse {
 
     public static String askName = "➤➤➤ 수정하고 싶은 학생의 이름을 입력하세요.";
 
@@ -99,7 +101,7 @@ class modifyPrintFormat extends PrintTextFormat {
 
 }
 
-class removePrintFormat extends PrintTextFormat {
+class removePrintFormat extends CommonUse {
 
     public static String askName = "➤➤➤ 삭제하고 싶은 학생의 이름을 입력하세요.";
 
@@ -109,7 +111,7 @@ class removePrintFormat extends PrintTextFormat {
 
 }
 
-class searchPrintFormat extends PrintTextFormat {
+class searchPrintFormat extends CommonUse {
 
     public static String askField = "➤➤➤ 이름/전화번호/집주소/이메일/성적 중 어떤 항목으로 검색 하고 싶은가요? \n(단, 이름 선택 시 관련 학생의 정보를 제공하지만, 이 외의 항목은 학생 이름을 제공합니다.)";
 
@@ -118,9 +120,10 @@ class searchPrintFormat extends PrintTextFormat {
     }
 }
 
-class printPrintFormat extends PrintTextFormat {
+class printPrintFormat extends CommonUse {
 
     public static String askField = "\n➤➤➤ 특정 필드 기준으로 정렬하여 보고 싶으면, 특정 필드와 정렬방법을 지정해주세요. 만약, 원하지 않는다면 Q를 눌러주세요." +
                                     "\nex) 이름-b (이름/성적 - a.오름차순 b.내림차순)";
+
 
 }

@@ -1,6 +1,6 @@
 public class RemoveOperation {
 
-    public void remove(String name) {
+    public static void remove(String name) {
         InfoDataBase.allStudentInfo.remove(name);
         removePrintFormat.success(name);
     }

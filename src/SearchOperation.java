@@ -3,11 +3,15 @@ import java.util.List;
 
 public class SearchOperation {
 
-    public void search(String field, String value) {
+    public static void search(String field, String value) {
 
         if (field.contains("1")) {
-            searchPrintFormat.success(value);
-            InfoDataBase.allStudentInfo.get(value).forEach(System.out::println);
+            if (!PutOperation.checkDuplicate(value)) {
+                System.out.println(putPrintFormat.retryName);
+            } else {
+                searchPrintFormat.success(value);
+                InfoDataBase.allStudentInfo.get(value).forEach(System.out::println);
+            }
         } else {
             List<String> resultList = new ArrayList<>();
             for (String key : InfoDataBase.allStudentInfo.keySet()) {
@@ -18,8 +22,9 @@ public class SearchOperation {
                     }
                 }
             }
-            System.out.println(resultList);
-
+                System.out.println(resultList);
         }
     }
+
 }
+
